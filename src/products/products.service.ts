@@ -33,7 +33,7 @@ export class ProductsService {
   findByProvider(productId: string){
   //  const productProv = this.products.filter((product) => product.provider === productId);
   //  if(!productProv) throw new NotFoundException();
-   // return productProv;
+  //  return productProv;
   }
 
   async update(id: string, updateProductDto: UpdateProductDto) {
