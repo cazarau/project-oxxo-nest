@@ -1,13 +1,14 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { v4 as uuid } from "uuid";
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from './entities/product.entity';
 import { Repository } from 'typeorm';
+import { v4 as uuid } from 'uuid';
 
 @Injectable()
 export class ProductsService {
+  
   constructor(
     @InjectRepository(Product)
     private productRepository: Repository<Product>
@@ -19,7 +20,12 @@ export class ProductsService {
   }
 
   findAll() {
-    return this.productRepository.find();
+    return this.productRepository.find({
+      loadEagerRelations: true,
+      relations: {
+        provider: true,
+      }
+    });
   }
 
   findOne(id: string) {
@@ -30,10 +36,12 @@ export class ProductsService {
       return product;
   }
 
-  findByProvider(productId: string){
-  //  const productProv = this.products.filter((product) => product.provider === productId);
-  //  if(!productProv) throw new NotFoundException();
-  //  return productProv;
+  findByProvider(id: string){
+    return this.productRepository.findBy({
+      provider: {
+       providerId: id,
+      }
+    });
   }
 
   async update(id: string, updateProductDto: UpdateProductDto) {
@@ -52,7 +60,7 @@ export class ProductsService {
       productId: id
     })
     return{
-      message: 'Objeto con ID: ${id} eliminado'
+      message: `Objeto con ID: ${id} eliminado`
     }
   }
 }
