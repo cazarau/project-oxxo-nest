@@ -10,4 +10,6 @@ export class Location {
     locationAddress: string;
     @Column('array')
     locationLatLng: number[];
+
+    //pendiente relacion con Location
 }
