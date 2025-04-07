@@ -5,6 +5,7 @@ import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import { Auth } from 'src/auth/decorators/auth.decorator';
 import { ROLES } from 'src/auth/constants/roles.constants';
+import { get } from 'http';
 
 @Controller('employees')
 export class EmployeesController {
@@ -20,7 +21,6 @@ export class EmployeesController {
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
   uploadPhoto(@UploadedFile() file: Express.Multer.File){
-    console.log(file)
     return 'OK';
   }
 
@@ -34,6 +34,12 @@ export class EmployeesController {
   @Get(':id')
   findOne(@Param('id', new ParseUUIDPipe({version: '4'})) id: string) {
     return this.employeesService.findOne(id);
+  }
+
+  @Auth(ROLES.MANAGER)
+  @Get('/location/:id')
+  findAllLocation(@Param('id') id: string){
+    return this.employeesService.findByLocation(+id)
   }
 
   @Auth(ROLES.EMPLOYEE)
