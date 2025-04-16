@@ -24,6 +24,4 @@ export class AuthController {
   updateUser(@Param('email') userEmail: string, @Body() updateUserDto: UpdateUserDto){
     return this.authService.updateUser(userEmail, updateUserDto)
   }
-
-
 }
