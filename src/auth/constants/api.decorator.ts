@@ -1,5 +1,5 @@
 import { applyDecorators } from "@nestjs/common";
-import { ApiProperty, ApiResponse } from "@nestjs/swagger";
+import { ApiResponse } from "@nestjs/swagger";
   
 
 export const ApiAuth = (() => {
@@ -18,4 +18,4 @@ export const ApiAuth = (() => {
         }),
     )
 })
-  
+ 

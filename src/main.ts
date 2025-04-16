@@ -9,6 +9,7 @@ async function bootstrap() {
     .setTitle('oxxo_API')
     .setDescription('API para administración de un oxxo')
     .setVersion('0.9')
+    .addBearerAuth()
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory);
